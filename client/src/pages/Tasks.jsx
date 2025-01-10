@@ -1,11 +1,9 @@
-
+// import React from 'react'
 
 const Tasks = () => {
   return (
-    <div>
-      
-    </div>
-  );
+    <div>Tasks</div>
+  )
 }
 
-export default Tasks;
+export default Tasks
