@@ -57,6 +57,18 @@ const UserAvatar = () => {
                                 <MenuItem>
                                     {({ active }) => (
                                         <button
+                                            onClick={() => setOpenPassword(true)}
+                                            className={`tetx-gray-700 group flex w-full items-center rounded-md px-2 py-2 text-base`}
+                                        >
+                                            <FaUserLock className='mr-2' aria-hidden='true' />
+                                            Change Password
+                                        </button>
+                                    )}
+                                </MenuItem>
+
+                                <MenuItem>
+                                    {({ active }) => (
+                                        <button
                                             onClick={logoutHandler}
                                             className={`text-red-600 group flex w-full items-center rounded-md px-2 py-2 text-base`}
                                         >
