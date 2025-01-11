@@ -2,7 +2,6 @@
 // import React from 'react'
 import { Route, Routes, Navigate, Outlet, useLocation } from "react-router-dom"
 import Dashboard from '../pages/Dashboard'
-import Tasks from '../pages/Dashboard'
 import Users from "../pages/Users"
 import Trash from "../pages/Trash"
 import TaskDetails from "../pages/TaskDetails"
@@ -16,30 +15,31 @@ import clsx from "clsx"
 import { Transition } from "@headlessui/react"
 import { Fragment, useRef } from "react"
 import { setOpenSidebar } from "../redux/slices/authSlice"
+import Tasks from "../pages/Tasks"
 
 
 const Layout = () => {
     const { user } = useSelector((state) => state.auth);
     const location = useLocation()
-    return user ?
-        <div className=" w-full h-screen flex flex-col md:flex-row ">
-            <div className=" w-1/5 h-screen bg-white sticky top-0 hidden mh:block">
-                {/* sidebar */}
+    return user ? (
+        <div className='w-full h-screen flex flex-col md:flex-row'>
+            <div className='w-1/5 h-screen bg-white sticky top-0 hidden md:block'>
                 <Sidebar />
             </div>
 
-            {/* mobileView */}
             <MobileSidebar />
-            <div className="flex-1 overflow-y-auto">
-                {/* navbar */}
+
+            <div className='flex-1 overflow-y-auto'>
                 <Navbar />
-                <div className=" p-4 2xl:px-10 ">
+
+                <div className='p-4 2xl:px-10'>
                     <Outlet />
                 </div>
             </div>
-        </div> : (
-            <Navigate to="/login" state={{ from: location }} replace />
-        )
+        </div>
+    ) : (
+        <Navigate to='/log-in' state={{ from: location }} replace />
+    );
 }
 
 const MobileSidebar = () => {
@@ -109,7 +109,7 @@ const Approutes = () => {
                         <Route path="/teams" element={<Users />} />
                         <Route path="/trashed" element={
                             <Trash />} />
-                        <Route path="/task/:id" element={
+                        <Route path="/tasks/:id" element={
                             <TaskDetails />} />
                     </Route>
 

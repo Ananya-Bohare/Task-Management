@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Menu, Transition } from "@headlessui/react";
+import { Menu, MenuButton, MenuItem, MenuItems, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { FaUser, FaUserLock } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
@@ -23,12 +23,12 @@ const UserAvatar = () => {
             <div>
                 <Menu as='div' className='relative inline-block text-left'>
                     <div>
-                        <Menu.Button className='w-10 h-10 2xl:w-12 2xl:h-12 items-center justify-center rounded-full bg-blue-600'>
+                        <MenuButton className='w-10 h-10 2xl:w-12 2xl:h-12 items-center justify-center rounded-full bg-blue-600'>
                             <span className='text-white font-semibold'>
                                 {getInitials(user?.name)}
-                                {/* {user?.name} */}
+                                {/* {user?.name}  */}
                             </span>
-                        </Menu.Button>
+                        </MenuButton>
                     </div>
 
                     <Transition
@@ -40,9 +40,9 @@ const UserAvatar = () => {
                         leaveFrom='transform opacity-100 scale-100'
                         leaveTo='transform opacity-0 scale-95'
                     >
-                        <Menu.Items className='absolute right-0 mt-2 w-56 origin-top-right divide-gray-100 rounded-md bg-white shadow-2xl ring-1 ring-black/5 focus:outline-none'>
+                        <MenuItems className='absolute right-0 mt-2 w-56 origin-top-right divide-gray-100 rounded-md bg-white shadow-2xl ring-1 ring-black/5 focus:outline-none'>
                             <div className='p-4'>
-                                <Menu.Item>
+                                <MenuItem>
                                     {({ active }) => (
                                         <button
                                             onClick={() => setOpen(true)}
@@ -52,9 +52,9 @@ const UserAvatar = () => {
                                             Profile
                                         </button>
                                     )}
-                                </Menu.Item>
+                                </MenuItem>
 
-                                <Menu.Item>
+                                <MenuItem>
                                     {({ active }) => (
                                         <button
                                             onClick={logoutHandler}
@@ -64,9 +64,9 @@ const UserAvatar = () => {
                                             Logout
                                         </button>
                                     )}
-                                </Menu.Item>
+                                </MenuItem>
                             </div>
-                        </Menu.Items>
+                        </MenuItems>
                     </Transition>
                 </Menu>
             </div>

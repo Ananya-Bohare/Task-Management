@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Popover, Transition } from "@headlessui/react";
+import { Popover, PopoverButton, PopoverPanel, Transition } from "@headlessui/react";
 import moment from "moment";
 import { Fragment, useState } from "react";
 import { BiSolidMessageRounded } from "react-icons/bi";
@@ -74,16 +74,16 @@ const Notification = () => {
     return (
         <>
             <Popover className='relative'>
-                <Popover.Button className='inline-flex items-center outline-none'>
+                <PopoverButton className='inline-flex items-center outline-none'>
                     <div className='w-8 h-8 flex items-center justify-center text-gray-800 relative'>
                         <IoIosNotificationsOutline className='text-2xl' />
                         {data?.length > 0 && (
-                            <span className='absolute text-center top-0 right-1 text-sm text-white font-semibold w-4 h-4 rounded-full bg-red-600'>
+                            <span className='absolute text-center top-0 right-1 text-[12px] text-white font-semibold w-[17px] h-[17px] rounded-full bg-red-600'>
                                 {data?.length}
                             </span>
                         )}
                     </div>
-                </Popover.Button>
+                </PopoverButton>
 
                 <Transition
                     as={Fragment}
@@ -94,7 +94,8 @@ const Notification = () => {
                     leaveFrom='opacity-100 translate-y-0'
                     leaveTo='opacity-0 translate-y-1'
                 >
-                    <Popover.Panel className='absolute -right-16 md:-right-2 z-10 mt-5 flex w-screen max-w-max  px-4'>
+
+                    <PopoverPanel className='absolute -right-16 md:-right-2 z-10 mt-5 flex w-screen max-w-max  px-4'>
                         {({ close }) =>
                             data?.length > 0 && (
                                 <div className='w-screen max-w-md flex-auto overflow-hidden rounded-3xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5'>
@@ -142,9 +143,9 @@ const Notification = () => {
                                 </div>
                             )
                         }
-                    </Popover.Panel>
+                    </PopoverPanel>
                 </Transition>
-            </Popover>
+            </Popover >
         </>
     );
 };

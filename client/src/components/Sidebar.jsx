@@ -40,7 +40,7 @@ const linkData = [
     },
     {
         label: "Team",
-        link: "team",
+        link: "teams",
         icon: <FaUsers />,
     },
     {
@@ -82,9 +82,9 @@ const Sidebar = () => {
     return (
         <div className='w-full  h-full flex flex-col gap-6 p-5'>
             <h1 className='flex gap-1 items-center'>
-                <span className=" flex justify-center items-center gap-4">
+                <span className=" flex justify-center items-center gap-4 text-[27px] font-bold">
                     WorkHive
-                    <span className="text-5xl">
+                    <span className="text-[40px]">
                         <FcParallelTasks />
                     </span>
                 </span>

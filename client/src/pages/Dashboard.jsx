@@ -45,9 +45,6 @@ const TaskTable = ({ tasks }) => {
     <tr className='border-b border-gray-300 text-gray-600 hover:bg-gray-300/10'>
       <td className='py-2'>
         <div className='flex items-center gap-2'>
-          {/* <div
-            className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task.stage])}
-          /> */}
           <div className=' text-lg w-[40px] h-[40px] rounded-full flex justify-center items-center bg-violet-300'>
             <GoTasklist />
           </div>
@@ -64,27 +61,6 @@ const TaskTable = ({ tasks }) => {
           <span className='capitalize'>{task.priority}</span>
         </div>
       </td>
-
-      {/* <td className='py-2'>
-        <div className='flex'>
-          {task.team.map((m, index) => (
-            <div
-              key={index}
-              className={clsx(
-                "w-7 h-7 rounded-full text-white flex items-center justify-center text-sm -mr-1",
-                BGS[index % BGS.length]
-              )}
-            >
-              <UserInfo user={m} />
-            </div>
-          ))}
-        </div>
-      </td>
-      <td className='py-2 hidden md:block'>
-        <span className='text-base text-gray-600'>
-          {moment(task?.date).fromNow()}
-        </span>
-      </td> */}
     </tr>
   );
   return (
