@@ -33,8 +33,8 @@ const AddUser = ({ open, setOpen, userData }) => {
       try{
         if(userData){
             const result = await updateUser(data).unwrap();
-            toast.success(result?.message)
-            if(userData?._id === user>_id){
+            toast.success("Profile updated successfully")
+            if(userData?._id === user._id){
                 dispatch(setCredentials({...result.user}))
             }
         }else{
@@ -84,7 +84,7 @@ const AddUser = ({ open, setOpen, userData }) => {
                                 required: "Role is required!",
                             })}
                         >
-                            <option value="" disabled selected>
+                            <option value="" disabled >
                                 Select a Role
                             </option>
                             <option value="Admin">Admin</option>

@@ -172,11 +172,11 @@ export const dashboardStatistics = async (req, res) => {
         result[priority] = (result[priority] || 0) + 1;
         return result;
       }, {})
-    ).map(([name, total]) => ({ name, total }));
+    ).map(([name, total]) => ({ name, total }));*/}
 
     // calculate total tasks
     const totalTasks = allTasks?.length;
-    const last10Task = allTasks?.slice(0, 10);*/}
+    const last10Task = allTasks?.slice(0, 10);
 
     const summary = {
       totalTasks,
@@ -253,7 +253,7 @@ export const getTask = async (req, res) => {
 export const createSubTask = async (req, res) => {
   try {
     const { title, tag, date } = req.body;
-
+    console.log(req.params);
     const { id } = req.params;
 
     const newSubTask = {

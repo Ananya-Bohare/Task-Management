@@ -5,8 +5,9 @@ import ModalWrapper from "../ModalWrapper";
 import { Dialog } from "@headlessui/react";
 import Textbox from "../Textbox";
 import Button from "../Button";
+import {toast} from "sonner";
+import { useCreateSubTaskMutation } from "../../redux/slices/taskApiSlice";
 
-// eslint-disable-next-line no-unused-vars
 const AddSubTask = ({ open, setOpen, id }) => {
     const {
         register,
@@ -14,10 +15,21 @@ const AddSubTask = ({ open, setOpen, id }) => {
         formState: { errors },
     } = useForm();
 
-    // const [addSbTask] = useCreateSubTaskMutation();
-
+    const [addSbTask] = useCreateSubTaskMutation();
+    console.log(id);
     const handleOnSubmit = async (data) => {
-    };
+        try {
+          const res = await addSbTask({ data, id }).unwrap();
+          toast.success(res.message);
+          setTimeout(() => {
+            setOpen(false);
+          }, 500);
+        } catch (err) {
+          console.log(err);
+          toast.error(err?.data?.message || err.error);
+        }
+      };
+      
 
     return (
         <>

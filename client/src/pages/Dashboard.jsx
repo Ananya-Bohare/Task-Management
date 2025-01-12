@@ -14,11 +14,13 @@ import { FaUserCircle } from "react-icons/fa";
 import { GoTasklist } from "react-icons/go";
 import moment from "moment";
 import { summary } from "../assets/data";
+import Loading from "../components/Loader";
 import clsx from "clsx";
 import { BGS, PRIOTITYSTYELS, TASK_TYPE } from "../utils";
 import { FcHighPriority } from "react-icons/fc";
 import { FcLowPriority } from "react-icons/fc";
 import { MdPriorityHigh } from "react-icons/md";
+import { useGetDashboardStatsQuery } from "../redux/slices/taskApiSlice";
 
 
 
@@ -131,13 +133,21 @@ const UserTable = ({ users }) => {
   );
 };
 const Dashboard = () => {
-  const totals = summary.tasks;
+  const{data, isLoading } = useGetDashboardStatsQuery();
+  if (isLoading)
+    return(
+  <div className= 'py-10'>
+    <Loading />
+    </div>
+    );
+ 
+  const totals = data.tasks;
 
   const stats = [
     {
       _id: "1",
       label: "TOTAL TASK",
-      total: summary?.totalTasks || 0,
+      total: data?.totalTasks || 0,
       icon: <FaNewspaper />,
       bg: "bg-[#1d4ed8]",
     },

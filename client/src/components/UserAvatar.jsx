@@ -9,13 +9,13 @@ import { getInitials } from "../utils";
 import { toast } from "sonner";
 import { useLogoutMutation } from "../redux/slices/authApiSlice";
 import { logout } from "../redux/slices/authSlice";
+import AddUser from "./AddUser"
+import ChangePassword from "./ChangePassword";
 
 const UserAvatar = () => {
     const [open, setOpen] = useState(false);
     const [openPassword, setOpenPassword] = useState(false);
     const { user } = useSelector((state) => state.auth);
-    console.log("User  object:", user); // Debugging
-    console.log("User  name:", user?.name); // Debugging
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -95,6 +95,9 @@ const UserAvatar = () => {
                     </Transition>
                 </Menu>
             </div>
+            
+            <AddUser open={open} setOpen={setOpen} userData={user} />
+            <ChangePassword open={openPassword} setOpen={setOpenPassword} />
         </>
     );
 };

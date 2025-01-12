@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-/* eslint-disable react/prop-types */
 import clsx from "clsx";
 import moment from "moment";
 import React, { useState } from "react";
@@ -20,6 +19,7 @@ import { PRIOTITYSTYELS, TASK_TYPE, getInitials } from "../utils";
 import { FcHighPriority, FcLowPriority } from "react-icons/fc";
 import Loading from "../components/Loader";
 import Button from "../components/Button";
+import { useGetSingleTaskQuery , usePostTaskActivityMutation} from "../redux/slices/taskApiSlice";
 
 const assets = [
   "https://images.pexels.com/photos/2418664/pexels-photo-2418664.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -44,9 +44,10 @@ const TABS = [
   { title: "Task Detail", icon: <FaTasks /> },
 ];
 
-
 const TaskDetails = () => {
   const { id } = useParams();
+  const { data } = useGetSingleTaskQuery(id);
+  console.log(data);
 
   const [selected, setSelected] = useState(0);
   const task = tasks[3];
@@ -183,6 +184,8 @@ const TaskDetails = () => {
 //   const [selected, setSelected] = useState(act_types[0]);
 //   const [text, setText] = useState("");
 //   const isLoading = false;
+
+// const [postActivity ] = usePostTaskActivityMutation();
 
 //   const handleSubmit = async () => { };
 

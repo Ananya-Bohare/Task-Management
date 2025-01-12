@@ -10,7 +10,7 @@ import AddUser from "../components/AddUser";
 import ConfirmatioDialog, { UserAction } from "../components/Dialogs";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
-import { useGetTeamListQuery , useDeleteUserMutation, useActionMutation} from "../redux/slices/userApiSlice";
+import { useGetTeamListQuery , useDeleteUserMutation, useUserActionMutation} from "../redux/slices/userApiSlice";
 import { toast } from "sonner";
 
 
@@ -24,7 +24,7 @@ const Users = () => {
 
   const {data, refetch} = useGetTeamListQuery();
   const [deleteUser] = useDeleteUserMutation();
-  const [userAction] = useActionMutation();
+  const [userAction] = useUserActionMutation();
 
   const userActionHandler = async () => { 
     try {
@@ -46,12 +46,14 @@ const Users = () => {
   };
   const deleteHandler = async () => {
     try {
-      const result = await deleteUser(selected)
+      const result = await deleteUser(selected);
+
       refetch();
       toast.success("Deleted successfully");
       setSelected(null);
+      
       setTimeout(()=>{
-       setOpenAction(false);
+       setOpenDialog(false);
       }, 500);
       toast.success(result.data.message);       
     } catch (error) {

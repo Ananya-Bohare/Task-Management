@@ -6,6 +6,8 @@ import { BiSolidMessageRounded } from "react-icons/bi";
 import { HiBellAlert } from "react-icons/hi2";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { Link } from "react-router-dom";
+import ViewNotification from "./ViewNotification.jsx";
+import { useGetNotificationQuery, useMarkNotiReadMutation } from "../redux/slices/userApiSlice";
 
 const data = [
     {
@@ -55,11 +57,19 @@ const Notification = () => {
     const [open, setOpen] = useState(false);
     const [selected, setSelected] = useState(null);
 
-    //  const { data, refetch } = useGetNotificationsQuery();
-    //  const [markAsRead] = useMarkNotiAsReadMutation();
+    const { data, refetch } = useGetNotificationQuery();
+    const [markAsRead] = useMarkNotiReadMutation();
 
-    const readHandler = () => { };
-    const viewHandler = () => { };
+    const readHandler = async (type, id) => { 
+        await markAsRead({type, id }).unwrap();
+
+        refetch();
+    };
+    const viewHandler = async (el) => {
+        setSelected(el);
+        readHandler("one", el._id);
+        setOpen(true);
+     };
 
     const callsToAction = [
         { name: "Cancel", href: "#", icon: "" },
@@ -146,6 +156,8 @@ const Notification = () => {
                     </PopoverPanel>
                 </Transition>
             </Popover >
+
+            <ViewNotification open={open} setOpen={setOpen} el={selected} />
         </>
     );
 };
