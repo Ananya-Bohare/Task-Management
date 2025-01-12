@@ -3,7 +3,6 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import morgan from 'morgan';
-// import dbConnection from './utils/index.js';
 import { errorHandler, routeNotFound } from './middleware/errorMiddleware.js';
 import route from './routes/index.js';
 import { dbConnection } from './utils/index.js';
@@ -18,7 +17,7 @@ const app = express()
 
 app.use(
     cors({
-        origin: ["http://localhost:3000", "http://localhost:3001"],
+        origin: ["http://localhost:5173"],
         methods: ["GET", "POST", "DELETE", "PUT"],
         credentials: true,
     })

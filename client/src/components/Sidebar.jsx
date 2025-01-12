@@ -40,7 +40,7 @@ const linkData = [
     },
     {
         label: "Team",
-        link: "teams",
+        link: "team",
         icon: <FaUsers />,
     },
     {

@@ -24,14 +24,19 @@ export function dateFormatter(dateString) {
     return formattedDate;
 }
 
-export function getInitials(fullName) {
-    const names = fullName.split(" ");
+export function getInitials(fullName, maxInitials = 2) {
+  if (!fullName || typeof fullName !== 'string') {
+    return '';
+  }
 
-    const initials = names.slice(0, 2).map((name) => name[0].toUpperCase());
+  const names = fullName.trim().split(" ");
 
-    const initialsStr = initials.join("");
+  if (names.length === 0 || names[0] === '') {
+    return '';
+  }
 
-    return initialsStr;
+  const initials = names.slice(0, maxInitials).map((name) => name[0].toUpperCase());
+  return initials.join("");
 }
 
 export const PRIOTITYSTYELS = {

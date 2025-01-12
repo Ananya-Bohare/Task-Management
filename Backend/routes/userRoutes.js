@@ -1,5 +1,5 @@
 import express from 'express';
-import { protectRoute, isAdminRoute } from '../middleware/authMiddlewave.js';
+import { protectRoute, isAdminRoute } from '../middleware/authMiddleware.js';
 import { activateUserProfile, changeUserPassword, deleteUserProfile, getNotificationsList, getTeamList, loginUser, logoutUser, markNotificationRead, registerUser, updateUserProfile } from '../controllers/userController.js';
 
 const router = express.Router();

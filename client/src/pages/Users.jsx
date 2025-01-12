@@ -1,16 +1,17 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import { useState } from "react";
 import Title from "../components/Title";
 import Button from "../components/Button";
 import { IoMdAdd } from "react-icons/io";
-import { summary } from "../assets/data";
+//import { summary } from "../assets/data";
 import { getInitials } from "../utils";
 import clsx from "clsx";
 import AddUser from "../components/AddUser";
 import ConfirmatioDialog, { UserAction } from "../components/Dialogs";
 import { FaRegEdit } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
+import { useGetTeamListQuery , useDeleteUserMutation, useActionMutation} from "../redux/slices/userApiSlice";
+import { toast } from "sonner";
 
 
 
@@ -20,8 +21,50 @@ const Users = () => {
   const [openAction, setOpenAction] = useState(false);
   const [selected, setSelected] = useState(null);
 
-  const userActionHandler = () => { };
-  const deleteHandler = () => { };
+
+  const {data, refetch} = useGetTeamListQuery();
+  const [deleteUser] = useDeleteUserMutation();
+  const [userAction] = useActionMutation();
+
+  const userActionHandler = async () => { 
+    try {
+      const result = await userAction({
+        isActive: !selected?.isActive,
+        id: selected?._id,
+      })
+      refetch();
+      toast.success(result.data.message);
+      setSelected(null);
+      setTimeout(()=>{
+       setOpenAction(false);
+      }, 500);
+      toast.success(result.data.message);       
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.data.message || error.error);
+  }
+  };
+  const deleteHandler = async () => {
+    try {
+      const result = await deleteUser(selected)
+      refetch();
+      toast.success("Deleted successfully");
+      setSelected(null);
+      setTimeout(()=>{
+       setOpenAction(false);
+      }, 500);
+      toast.success(result.data.message);       
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.data.message || error.error);
+  }
+
+   };
+
+   const userStatusClick = (el) => {
+    setSelected(el);
+    setOpenAction(true);
+   }
 
   const deleteClick = (id) => {
     setSelected(id);
@@ -61,6 +104,18 @@ const Users = () => {
       <td className='p-2'>{user.email || "user.emal.com"}</td>
       <td className='p-2'>{user.role}</td>
 
+      <td>
+        <button
+          onClick={() => userStatusClick(user)}
+          className={clsx(
+            "w-fit px-4 py-1 rounded-full",
+            user?.isActive ? "bg-blue-200" : "bg-yellow-100"
+          )}
+        >
+          {user?.isActive ? "Active" : "Disabled"}
+        </button>
+      </td>
+
       <td className='p-2 flex gap-4 justify-end'>
         <Button
           className='text-blue-600 hover:text-blue-500 font-semibold sm:px-0'
@@ -97,7 +152,7 @@ const Users = () => {
             <table className='w-full mb-5'>
               <TableHeader />
               <tbody>
-                {summary.users?.map((user, index) => (
+                {data?.map((user, index) => (
                   <TableRow key={index} user={user} />
                 ))}
               </tbody>

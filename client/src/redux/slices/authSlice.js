@@ -1,12 +1,17 @@
 /* eslint-disable no-unused-vars */
 import { createSlice } from "@reduxjs/toolkit";
-import { user } from "../../assets/data";
+//import { user } from "../../assets/data";
 
 const initialState = {
-    user: localStorage.getItem("userInfo")
-        ? JSON.parse(localStorage.getItem("userInfo"))
-        : user,
-
+    user: (() => {
+        try {
+            const userInfo = localStorage.getItem("userInfo");
+            return userInfo ? JSON.parse(userInfo) : null;
+        } catch (error) {
+            console.error("Error parsing userInfo from localStorage:", error);
+            return null;
+        }
+    })(),
     isSidebarOpen: false,
 };
 
