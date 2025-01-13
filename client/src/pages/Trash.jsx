@@ -15,6 +15,7 @@ import { PRIOTITYSTYELS, TASK_TYPE } from "../utils";
 import AddUser from "../components/AddUser";
 import ConfirmatioDialog from "../components/Dialogs";
 import { FcHighPriority, FcLowPriority } from "react-icons/fc";
+import {useGetAllTaskQuery ,useDeleteRestoreTaskMutation } from "../redux/slices/taskApiSlice";
 
 const ICONS = {
   high: <FcHighPriority />,
@@ -28,6 +29,52 @@ const Trash = () => {
   const [msg, setMsg] = useState(null);
   const [type, setType] = useState("delete");
   const [selected, setSelected] = useState("");
+
+
+  const { data , isLoading } = useGetAllTaskQuery({
+    strQuery: "",
+    isTrashed: "true",
+    search:"",
+  })
+
+  const [ deleteRestoreTask ] = useDeleteRestoreTaskMutation();
+  const deleteRestoreHandler = async () => {
+
+    switch (type) {
+      case "delete":
+        result = await deleteRestoreTask({
+          id: selected,
+          actionType: "delete",
+        }).unwrap();
+        break;
+      case "deleteAll":
+        result = await deleteRestoreTask({
+          id: selected,
+          actionType: "delete",
+        }).unwrap();
+        break;
+      case "restore":
+        result = await deleteRestoreTask({
+          id: selected,
+          actionType: "restore",
+        }).unwrap();
+        break;
+        case "restoreAll":
+          result = await deleteRestoreTask({
+            id: selected,
+            actionType: "restoreAll",
+          }).unwrap();
+      break;
+    }
+    
+
+    try {
+      let result;
+    }catch (err) {
+      console.log(err);
+
+    }
+  }
 
   const deleteAllClick = () => {
     setType("deleteAll");
@@ -108,6 +155,12 @@ const Trash = () => {
           <Title title='Trashed Tasks' />
 
           <div className='flex gap-2 md:gap-4 items-center'>
+          <Button
+              label='Restore All'
+              icon={<MdOutlineRestore className='text-lg hidden md:flex' />}
+              className='flex flex-row-reverse gap-1 items-center  text-red-600 text-sm md:text-base rounded-md 2xl:py-2.5'
+              onClick={() => restoreAllClick()}
+            />
             <Button
               label='Delete All'
               icon={<MdDelete className='text-lg hidden md:flex' />}
@@ -121,7 +174,7 @@ const Trash = () => {
             <table className='w-full mb-5'>
               <TableHeader />
               <tbody>
-                {tasks?.map((tk, id) => (
+                {data?.task.map((tk, id) => (
                   <TableRow key={id} item={tk} />
                 ))}
               </tbody>

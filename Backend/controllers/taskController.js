@@ -126,6 +126,7 @@ export const postTaskActivity = async (req, res) => {
 export const dashboardStatistics = async (req, res) => {
   try {
     const { userId, isAdmin } = req.user;
+    console.log(req.user);
 
     const allTasks = isAdmin
       ? await Task.find({
@@ -164,15 +165,15 @@ export const dashboardStatistics = async (req, res) => {
       return result;
     }, {});
 
-    // Group tasks by priority for graph representation
-    {/*const groupData = Object.entries(
+    //Group tasks by priority for graph representation
+    const groupData = Object.entries(
       allTasks.reduce((result, task) => {
         const { priority } = task;
 
         result[priority] = (result[priority] || 0) + 1;
         return result;
       }, {})
-    ).map(([name, total]) => ({ name, total }));*/}
+    ).map(([name, total]) => ({ name, total }));
 
     // calculate total tasks
     const totalTasks = allTasks?.length;
