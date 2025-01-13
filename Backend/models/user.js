@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
     password: { type: String, required: true },
     isAdmin: { type: Boolean, required: true, default: true },
     tasks: [{ type: Schema.Types.ObjectId, ref: "Task" }],
-    isActive: { type: Boolean, required: true, default: false },
+    isActive: { type: Boolean, required: true, default: true },
 }, { timestamps: true });
 
 userSchema.pre("save", async function (next) {

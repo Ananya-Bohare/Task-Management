@@ -39,7 +39,7 @@ const AddUser = ({ open, setOpen, userData }) => {
             }
         }else{
             const result = await addNewUser({
-                ...DataTransfer, 
+                ...data, 
                 password: data.email
             }).unwrap();
             toast.success("New User added successfully");
@@ -77,6 +77,21 @@ const AddUser = ({ open, setOpen, userData }) => {
                             })}
                             error={errors.name ? errors.name.message : ""}
                         />
+
+                        <Textbox
+                            placeholder='Title'
+                            type='text'
+                            name='title'
+                            label='Title'
+                            className='w-full rounded'
+                            defaultValue={userData?.title || ""}
+                            register={register("title", {
+                                required: "Title is required!",
+                            })}
+                            error={errors.title ? errors.title.message : ""}
+                        />
+
+
                         <select
                             name="role"
                             className="w-full rounded border p-2"
