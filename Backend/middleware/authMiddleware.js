@@ -17,7 +17,7 @@ const protectRoute = async (req, res, next) => {
                 isAdmin: resp.isAdmin,
                 userId: decodedToken.userId,
             };
-
+            console.log("req.user set:", req.user);
             next();
         } else {
             return res

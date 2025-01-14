@@ -26,7 +26,7 @@ const [login, {isLoading}] = useLoginMutation();
 
   const submitHandler = async (data) => {
     try {
-      const result = await login(data);
+      const result = await login(data).unwrap();
 
       dispatch(setCredentials(result));
       navigate("/");

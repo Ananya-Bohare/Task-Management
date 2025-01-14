@@ -16,8 +16,9 @@ import moment from "moment";
 import { summary } from "../assets/data";
 import Loading from "../components/Loader";
 import clsx from "clsx";
-import { BGS, PRIOTITYSTYELS, TASK_TYPE } from "../utils";
+import { BGS, PRIOTITYSTYELS, TASK_TYPE , getInitials} from "../utils";
 import { FcHighPriority } from "react-icons/fc";
+import UserInfo from "../components/UserInfo";
 import { FcLowPriority } from "react-icons/fc";
 import { MdPriorityHigh } from "react-icons/md";
 import { useGetDashboardStatsQuery } from "../redux/slices/taskApiSlice";
@@ -37,8 +38,6 @@ const TaskTable = ({ tasks }) => {
       <tr className='text-black text-left'>
         <th className='py-2'>Task Title</th>
         <th className='py-2'>Priority</th>
-        {/* <th className='py-2'>Team</th>
-        <th className='py-2 hidden md:block'>Created At</th> */}
       </tr>
     </thead>
   );
@@ -63,8 +62,11 @@ const TaskTable = ({ tasks }) => {
           <span className='capitalize'>{task.priority}</span>
         </div>
       </td>
+
+    
     </tr>
   );
+
   return (
     <>
       <div className='w-full md:w-2/3 bg-white px-2 md:px-4 pt-4 pb-4 shadow-md rounded'>
@@ -141,7 +143,7 @@ const Dashboard = () => {
     </div>
     );
  
-  const totals = data.tasks;
+  const totals = data?.tasks;
 
   const stats = [
     {

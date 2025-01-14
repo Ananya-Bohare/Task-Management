@@ -12,7 +12,7 @@ import TaskDetails from "./pages/TaskDetails";
 import Tasks from "./pages/Tasks";
 import Trash from "./pages/Trash";
 import Users from "./pages/Users";
-import Dashboard from "./pages/dashboard";
+import Dashboard from "./pages/Dashboard";
 import { setOpenSidebar } from "./redux/slices/authSlice";
 
 function Layout() {
@@ -111,7 +111,28 @@ function App() {
         <Route path='/log-in' element={<Login />} />
       </Routes>
 
-      <Toaster richColors />
+      <Toaster
+    richColors
+    toastOptions={{
+        style: {
+            position: "fixed",
+            top: "10px", // Small gap from the top
+            right: "20px", // Small gap from the right
+            padding: "4px 5px", // Compact padding
+            fontSize: "12px", // Smaller font size
+            maxWidth: "200px", // Reduce the maximum width
+            maxHeight: "50px", // Reduce the maximum width
+            zIndex: "9999", // Ensure it's on top of other elements
+            animation: "fadein 0.2s ease-out, fadeout 0.4s ease-in", // Smooth and quicker transition
+            borderRadius: "6px", // Slightly rounded corners
+            boxShadow: "0 2px 5px rgba(0, 0, 0, 0.2)", // Subtle shadow
+        },
+        duration: 2000, // Show for 2 seconds
+    }}
+/>
+
+
+
     </main>
   );
 }

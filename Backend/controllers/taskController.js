@@ -1,6 +1,7 @@
 import Notice from "../models/notification.js";
 import Task from "../models/task.js";
 import User from "../models/user.js";
+import { sendEmail } from '../models/notification.js';
 
 export const createTask = async (req, res) => {
   try {
@@ -39,6 +40,22 @@ export const createTask = async (req, res) => {
       team,
       text,
       task: task._id,
+    });
+
+    // Find users assigned to the task and send them an email
+    const assignedUsers = await User.find({ '_id': { $in: team } });
+
+    assignedUsers.forEach((user) => {
+      // Prepare the email subject and body
+      const emailSubject = `Task Assigned: ${title}`;
+      const emailText = `${text}\n\nDetails:\nTitle: ${title}\nStage: ${stage}\nPriority: ${priority}\nDate: ${new Date(date).toDateString()}`;
+
+      // Send email to the assigned user
+      try {
+        sendEmail(user.email, emailSubject, emailText);
+      } catch (error) {
+        console.log(`Error sending email to ${user.email}: ${error.message}`);
+      }
     });
 
     res
@@ -125,8 +142,8 @@ export const postTaskActivity = async (req, res) => {
 
 export const dashboardStatistics = async (req, res) => {
   try {
+    console.log("req.user in dashboardStatistics:", req.user);
     const { userId, isAdmin } = req.user;
-    console.log(req.user);
 
     const allTasks = isAdmin
       ? await Task.find({
@@ -151,6 +168,8 @@ export const dashboardStatistics = async (req, res) => {
       .select("name title role isAdmin createdAt")
       .limit(10)
       .sort({ _id: -1 });
+      console.log("Users fetched for admin:", users);
+      console.log("Total tasks fetched for admin:", allTasks.length); // Log task count
 
     //   group task by stage and calculate counts
     const groupTasks = allTasks.reduce((result, task) => {

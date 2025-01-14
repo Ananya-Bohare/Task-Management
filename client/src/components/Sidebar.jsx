@@ -5,7 +5,7 @@ import {
     MdSettings,
     MdTaskAlt,
 } from "react-icons/md";
-import { FaTasks, FaTrashAlt, FaUsers } from "react-icons/fa";
+import { FaTasks , FaUsers } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import clsx from "clsx";
@@ -42,12 +42,7 @@ const linkData = [
         label: "Team",
         link: "team",
         icon: <FaUsers />,
-    },
-    {
-        label: "Trash",
-        link: "trashed",
-        icon: <FaTrashAlt />,
-    },
+    }
 ];
 
 const Sidebar = () => {
@@ -58,7 +53,10 @@ const Sidebar = () => {
 
     const path = location.pathname.split("/")[1];
 
-    const sidebarLinks = user?.isAdmin ? linkData : linkData.slice(0, 5);
+    const sidebarLinks = user?.isAdmin
+  ? linkData // Show all links if the user is an admin
+  : linkData.filter((link) => !["Team", "Trash"].includes(link.label)); // Exclude "Team" and "Trash" for non-admin users
+
 
     const closeSidebar = () => {
         dispatch(setOpenSidebar(false));
